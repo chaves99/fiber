@@ -1,15 +1,14 @@
 package com.fiber.service;
 
+import com.fiber.entity.UserEntity;
 import com.fiber.payload.LoginRequestPayload;
+import com.fiber.payload.LoginResponsePayload;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 
 @Slf4j
 @Service
@@ -18,48 +17,21 @@ public class LoginService {
 
     private AuthenticationManager authenticationManager;
 
-    public Authentication login(LoginRequestPayload loginRequestPayload) {
+    private TokenService tokenService;
+
+    public LoginResponsePayload login(LoginRequestPayload loginRequestPayload) {
         try {
-            return authenticationManager.authenticate(loginRequestPayload);
-        } catch (AuthenticationException e){
+            Authentication authentication = authenticationManager.authenticate(loginRequestPayload);
+            String token = tokenService.generate(authentication);
+            if (authentication.getDetails() instanceof UserEntity user) {
+                LoginResponsePayload response = new LoginResponsePayload(user.getId(), user.getName(), user.getEmail(), token);
+                return response;
+            }
+            return new LoginResponsePayload(null, authentication.getName(), null, token);
+        } catch (AuthenticationException e) {
             log.error("login - username:{}", loginRequestPayload.getName());
             log.error("login - Exception: ", e);
-            return new Authentication() {
-                @Override
-                public Collection<? extends GrantedAuthority> getAuthorities() {
-                    return null;
-                }
-
-                @Override
-                public Object getCredentials() {
-                    return null;
-                }
-
-                @Override
-                public Object getDetails() {
-                    return null;
-                }
-
-                @Override
-                public Object getPrincipal() {
-                    return null;
-                }
-
-                @Override
-                public boolean isAuthenticated() {
-                    return false;
-                }
-
-                @Override
-                public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
-                }
-
-                @Override
-                public String getName() {
-                    return null;
-                }
-            };
+            throw e;
         }
     }
 }

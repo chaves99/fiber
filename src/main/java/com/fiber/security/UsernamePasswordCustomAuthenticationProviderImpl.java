@@ -1,6 +1,8 @@
 package com.fiber.security;
 
 import com.fiber.payload.LoginRequestPayload;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -12,14 +14,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 
+@Slf4j
 public class UsernamePasswordCustomAuthenticationProviderImpl implements AuthenticationProvider {
 
+    @Setter
     private UserDetailsService userDetailsService;
 
+    @Setter
     private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        log.info("authenticate - username:{}", authentication.getName());
         UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
         boolean matches = passwordEncoder.matches((String) authentication.getCredentials(), userDetails.getPassword());
         if (matches) {

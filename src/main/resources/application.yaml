@@ -5,7 +5,7 @@ spring:
   application:
     name: fiber
   datasource:
-    url: jdbc:mysql://localhost:3306/fiber
+    url: jdbc:mysql://172.17.0.2:3306/fiber
     username: root
     password: fiberpass
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,6 +16,9 @@ spring:
 
 logging:
   level:
-    web: debug
+    web: info
     sql: info
     root: info
+
+jwt:
+  key: 9faa372517ac1d389758d3750fc07acf00f542277f26fec1ce4593e93f64e338
