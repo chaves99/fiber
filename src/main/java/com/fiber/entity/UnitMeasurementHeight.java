@@ -1,2 +1,7 @@
-package com.fiber.entity;public class UnitMeasurement {
+package com.fiber.entity;
+
+public enum UnitMeasurementHeight {
+
+    CENTIMETER,
+    FOOT;
 }

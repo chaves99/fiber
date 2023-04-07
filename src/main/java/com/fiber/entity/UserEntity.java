@@ -32,6 +32,16 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
+    private Double weight;
+
+    private Double height;
+
+    @Enumerated(EnumType.STRING)
+    private UnitMeasurementWeight weightUnit;
+
+    @Enumerated(EnumType.STRING)
+    private UnitMeasurementHeight heightUnit;
+
     @OneToMany
     private List<DietSeasonEntity> dietSeason;
 
