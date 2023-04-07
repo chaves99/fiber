@@ -74,4 +74,12 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void weightUnit(String value) {
+        setWeightUnit(UnitMeasurementWeight.getByName(value));
+    }
+
+    public void heightUnit(String value) {
+        setHeightUnit(UnitMeasurementHeight.getByName(value));
+    }
 }

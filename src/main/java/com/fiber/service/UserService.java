@@ -40,6 +40,18 @@ public class UserService {
         if (payload.email() != null) {
             userEntity.setEmail(payload.email());
         }
+        if (payload.weight() != null) {
+            userEntity.setWeight(payload.weight());
+        }
+        if (payload.height() != null) {
+            userEntity.setHeight(payload.height());
+        }
+        if (payload.weightUnit() != null) {
+            userEntity.weightUnit(payload.weightUnit());
+        }
+        if (payload.heightUnit() != null) {
+            userEntity.heightUnit(payload.heightUnit());
+        }
         return this.userRepository.saveAndFlush(userEntity);
     }
 
