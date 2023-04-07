@@ -1,5 +1,5 @@
 /target/
-!.mvn/wrapper/maven-wrapper.jar
+#!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -132,9 +132,9 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-.mvn/*
+#.mvn/timing.properties
+#.mvn/wrapper/maven-wrapper.jar
+#.mvn/*
 
 ### Windows ###
 # Windows thumbnail cache files

@@ -6,8 +6,8 @@ spring:
     name: fiber
   datasource:
     url: jdbc:mysql://172.17.0.2:3306/fiber
-    username: root
-    password: fiberpass
+    username: guest
+    password: guest
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true

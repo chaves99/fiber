@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,7 @@ public class SecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests(r -> {
                     r.requestMatchers("/status", "/user/login", "/user/test").permitAll();
+                    r.requestMatchers(HttpMethod.OPTIONS).permitAll();
                     r.anyRequest().authenticated();
                 })
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
@@ -52,7 +54,9 @@ public class SecurityConfig {
                 registry
                         .addMapping("/**")
                         .allowedOrigins("http://localhost:8080", "http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                        .allowCredentials(true)
+                ;
             }
         };
     }
@@ -69,7 +73,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return username -> {
             return userRepository.findByName(username).orElseThrow(() -> {
-                throw new UsernameNotFoundException("Not found user: " + username);
+                throw new UsernameNotFoundException("User not found - userId: " + username);
             });
         };
     }

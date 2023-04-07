@@ -35,11 +35,13 @@ public class FoodEntity {
 
     private Double calories;
 
+    private Double fat;
+
     public static FoodEntity from(RegisterFoodRequestPayload payload) {
         return new FoodEntity(null, payload.name(),
                 payload.baseQuantity(), payload.carbohydrate(),
                 payload.protein(), payload.fiber(),
-                payload.calories());
+                payload.calories(), payload.fat());
     }
 
     public void update(RegisterFoodRequestPayload payload) {
@@ -60,6 +62,9 @@ public class FoodEntity {
         }
         if (payload.calories() != null) {
             setCalories(payload.calories());
+        }
+        if (payload.fat() != null) {
+            setFat(payload.fat());
         }
     }
 }

@@ -1,7 +1,7 @@
 FROM eclipse-temurin:17.0.6_10-jdk-focal
 
 COPY .mvn .mvn
-COPY ./mvnw .
+COPY ./mvnw ./mvnw
 COPY ./src ./src
 COPY ./pom.xml .
 

@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Slf4j
 @SpringBootApplication
 public class FiberApplication {
@@ -21,12 +23,10 @@ public class FiberApplication {
     public CommandLineRunner runner(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             UserEntity userEntity = new UserEntity(null, "Chaves",
-                    "viniciusbaleia1999@gmail.com", passwordEncoder.encode("chaves"),
-                    3500.0, 500.0, 200.0);
+                    "viniciusbaleia1999@gmail.com", passwordEncoder.encode("chaves"), List.of());
 
             UserEntity userEntity2 = new UserEntity(null, "Yuri",
-                    "yuri@gmail.com", passwordEncoder.encode("yuri"),
-                    2400.0, 300.0, 150.0);
+                    "yuri@gmail.com", passwordEncoder.encode("yuri"), List.of());
             if(userRepository.findByName(userEntity.getName()).isEmpty()) {
                 log.info("create user[{}]", userRepository.save(userEntity));
 

@@ -1,12 +1,6 @@
 package com.fiber.entity;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +10,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Table(name = "user")
 @Entity
@@ -37,11 +32,8 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
-    private Double goalCalories;
-
-    private Double goalCarbohydrate;
-
-    private Double goalProtein;
+    @OneToMany
+    private List<DietSeasonEntity> dietSeason;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
