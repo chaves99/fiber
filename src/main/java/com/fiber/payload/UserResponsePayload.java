@@ -10,9 +10,13 @@ public record UserResponsePayload(Long id, String name, String email,
                                   String weightUnit, String heightUnit) {
 
     public static UserResponsePayload from(UserEntity entity) {
+        String weightUnit = entity.getWeightUnit() != null ? entity.getWeightUnit().name() : "";
+        String heightUnit = entity.getHeightUnit() != null ? entity.getHeightUnit().name() : "";
+        Double height = entity.getHeight() != null ? entity.getHeight() : 0;
+        Double weight = entity.getWeight() != null ? entity.getWeight() : 0;
         return new UserResponsePayload(entity.getId(), entity.getName(),
-                entity.getEmail(), entity.getWeight(), entity.getHeight(),
-                entity.getWeightUnit().name(), entity.getHeightUnit().name());
+                entity.getEmail(), weight, height,
+                weightUnit, heightUnit);
     }
 
     public static List<UserResponsePayload> from(List<UserEntity> entities) {
