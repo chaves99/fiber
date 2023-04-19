@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(r -> {
-                    r.requestMatchers("/status", "/user/login", "/user/test").permitAll();
+                    r.requestMatchers("/status", "/user/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     r.requestMatchers(HttpMethod.OPTIONS).permitAll();
                     r.anyRequest().authenticated();
                 })

@@ -33,10 +33,10 @@ public class FiberApplication {
                     "yuri@gmail.com", passwordEncoder.encode("yuri"),
                     60D, 155D, UnitMeasurementWeight.KILOGRAMS, UnitMeasurementHeight.CENTIMETER,
                     List.of());
-            if(userRepository.findByName(userEntity.getName()).isEmpty()) {
+            if (userRepository.findByName(userEntity.getName()).isEmpty()) {
                 log.info("create user[{}]", userRepository.save(userEntity));
             }
-            if(userRepository.findByName(userEntity2.getName()).isEmpty()) {
+            if (userRepository.findByName(userEntity2.getName()).isEmpty()) {
                 log.info("create user[{}]", userRepository.save(userEntity2));
             }
         };
