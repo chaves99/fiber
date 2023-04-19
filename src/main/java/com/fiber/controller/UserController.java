@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponsePayload> register(
+    public ResponseEntity<UserResponsePayload> update(
             @PathVariable Long id,
             @RequestBody UserUpdateRequestPayload payload) {
         return ResponseEntity.ok(UserResponsePayload.from(userService.update(id, payload)));
