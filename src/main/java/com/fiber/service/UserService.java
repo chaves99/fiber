@@ -1,6 +1,7 @@
 package com.fiber.service;
 
 import com.fiber.entity.UserEntity;
+import com.fiber.payload.UserRegisterRequestPayload;
 import com.fiber.payload.UserUpdateRequestPayload;
 import com.fiber.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -22,8 +23,8 @@ public class UserService {
         return users;
     }
 
-    public UserEntity register(UserEntity userEntity) {
-        return this.userRepository.save(userEntity);
+    public UserEntity register(UserRegisterRequestPayload user) {
+        return this.userRepository.save(user.toEntity());
     }
 
     public UserEntity get(Long id) {
@@ -46,10 +47,10 @@ public class UserService {
         if (payload.height() != null) {
             userEntity.setHeight(payload.height());
         }
-        if (payload.weightUnit() != null) {
+        if (payload.weightUnit() != null && !payload.weightUnit().isEmpty()) {
             userEntity.weightUnit(payload.weightUnit());
         }
-        if (payload.heightUnit() != null) {
+        if (payload.heightUnit() != null && !payload.heightUnit().isEmpty()) {
             userEntity.heightUnit(payload.heightUnit());
         }
         return this.userRepository.saveAndFlush(userEntity);

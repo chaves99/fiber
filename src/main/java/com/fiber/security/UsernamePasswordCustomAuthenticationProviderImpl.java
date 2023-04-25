@@ -1,5 +1,6 @@
 package com.fiber.security;
 
+import com.fiber.model.UserAuthenticationModel;
 import com.fiber.payload.LoginRequestPayload;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -71,6 +72,6 @@ public class UsernamePasswordCustomAuthenticationProviderImpl implements Authent
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return authentication.isAssignableFrom(LoginRequestPayload.class);
+        return authentication.isAssignableFrom(UserAuthenticationModel.class);
     }
 }

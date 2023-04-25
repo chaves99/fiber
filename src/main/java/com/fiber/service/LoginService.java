@@ -1,6 +1,7 @@
 package com.fiber.service;
 
 import com.fiber.entity.UserEntity;
+import com.fiber.model.UserAuthenticationModel;
 import com.fiber.payload.LoginRequestPayload;
 import com.fiber.payload.LoginResponsePayload;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,9 @@ public class LoginService {
     private TokenService tokenService;
 
     public LoginResponsePayload login(LoginRequestPayload loginRequestPayload) {
+        UserAuthenticationModel authenticationModel = new UserAuthenticationModel(loginRequestPayload);
         try {
-            Authentication authentication = authenticationManager.authenticate(loginRequestPayload);
+            Authentication authentication = authenticationManager.authenticate(authenticationModel);
             String token = tokenService.generate(authentication);
             if (authentication.getDetails() instanceof UserEntity user) {
                 LoginResponsePayload response = new LoginResponsePayload(user.getId(), user.getName(), user.getEmail(), token);
@@ -29,7 +31,7 @@ public class LoginService {
             }
             return new LoginResponsePayload(null, authentication.getName(), null, token);
         } catch (AuthenticationException e) {
-            log.error("login - username:{}", loginRequestPayload.getName());
+            log.error("login - username:{}", authenticationModel.getName());
             log.error("login - Exception: ", e);
             throw e;
         }
