@@ -1,7 +1,7 @@
 package com.fiber.controller;
 
 import com.fiber.entity.FoodEntity;
-import com.fiber.payload.RegisterFoodRequestPayload;
+import com.fiber.payload.http.food.RegisterFoodRequestPayload;
 import com.fiber.service.FoodService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

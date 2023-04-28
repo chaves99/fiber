@@ -1,6 +1,6 @@
 package com.fiber.model;
 
-import com.fiber.payload.LoginRequestPayload;
+import com.fiber.payload.http.login.LoginRequestPayload;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;

@@ -1,4 +1,4 @@
-package com.fiber.payload;
+package com.fiber.payload.http.user;
 
 public record UserUpdateRequestPayload(
         String name,

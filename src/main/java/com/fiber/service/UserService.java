@@ -1,8 +1,8 @@
 package com.fiber.service;
 
 import com.fiber.entity.UserEntity;
-import com.fiber.payload.UserRegisterRequestPayload;
-import com.fiber.payload.UserUpdateRequestPayload;
+import com.fiber.payload.http.user.UserRegisterRequestPayload;
+import com.fiber.payload.http.user.UserUpdateRequestPayload;
 import com.fiber.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

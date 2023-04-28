@@ -2,8 +2,8 @@ package com.fiber.service;
 
 import com.fiber.entity.UserEntity;
 import com.fiber.model.UserAuthenticationModel;
-import com.fiber.payload.LoginRequestPayload;
-import com.fiber.payload.LoginResponsePayload;
+import com.fiber.payload.http.login.LoginRequestPayload;
+import com.fiber.payload.http.login.LoginResponsePayload;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

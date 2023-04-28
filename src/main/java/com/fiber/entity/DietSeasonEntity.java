@@ -1,10 +1,7 @@
 package com.fiber.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class DietSeasonEntity {
 
     @Id
@@ -38,6 +36,8 @@ public class DietSeasonEntity {
     private LocalDate finalDate;
 
     private Boolean active;
+
+    private UserEntity user;
 
     @OneToMany
     private List<MealDayEntity> mealDays;

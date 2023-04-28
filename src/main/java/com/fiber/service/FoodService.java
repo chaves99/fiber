@@ -1,7 +1,7 @@
 package com.fiber.service;
 
 import com.fiber.entity.FoodEntity;
-import com.fiber.payload.RegisterFoodRequestPayload;
+import com.fiber.payload.http.food.RegisterFoodRequestPayload;
 import com.fiber.repository.FoodRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

@@ -1,4 +1,4 @@
-package com.fiber.payload;
+package com.fiber.payload.http.food;
 
 public record RegisterFoodRequestPayload(String name, Double baseQuantity,
                                          Double carbohydrate, Double protein,

@@ -1,6 +1,10 @@
 package com.fiber.controller;
 
-import com.fiber.payload.*;
+import com.fiber.payload.http.login.LoginRequestPayload;
+import com.fiber.payload.http.login.LoginResponsePayload;
+import com.fiber.payload.http.user.UserRegisterRequestPayload;
+import com.fiber.payload.http.user.UserResponsePayload;
+import com.fiber.payload.http.user.UserUpdateRequestPayload;
 import com.fiber.service.LoginService;
 import com.fiber.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

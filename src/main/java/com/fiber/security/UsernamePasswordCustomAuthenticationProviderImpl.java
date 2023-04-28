@@ -1,7 +1,6 @@
 package com.fiber.security;
 
 import com.fiber.model.UserAuthenticationModel;
-import com.fiber.payload.LoginRequestPayload;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;

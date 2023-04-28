@@ -1,4 +1,4 @@
-package com.fiber.payload;
+package com.fiber.payload.http.user;
 
 import com.fiber.entity.UnitMeasurementHeight;
 import com.fiber.entity.UnitMeasurementWeight;
