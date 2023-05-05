@@ -1,6 +1,5 @@
 package com.fiber.service;
 
-import com.fiber.entity.DietSeasonEntity;
 import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
@@ -20,17 +19,17 @@ public class SeasonService {
 
     public List<SeasonResponsePayload> getByUserId(Long id) {
         try {
-        var seasonEntity = seasonRepository.findByUser_id(id);
-        if (seasonEntity == null || seasonEntity.size() == 0) {
-            throw new ResourceNotFoundException("Not found season for userid:[" + id + "]");
-        }
-        log.debug("getByUserId:{}", seasonEntity);
-        return seasonEntity
-                .stream()
-                .map(SeasonResponsePayload::fromEntity)
-                .collect(Collectors.toList());
+            var seasonEntity = seasonRepository.findByUserId(id);
+            if (seasonEntity == null || seasonEntity.size() == 0) {
+                throw new ResourceNotFoundException("Not found season for userid:[" + id + "]");
+            }
+            log.debug("getByUserId:{}", seasonEntity);
+            return seasonEntity
+                    .stream()
+                    .map(SeasonResponsePayload::fromEntity)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("getByUserId - Exception:{}", e);
+            log.error("getByUserId - Exception:", e);
             return null;
         }
     }

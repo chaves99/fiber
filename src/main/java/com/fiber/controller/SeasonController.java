@@ -52,4 +52,24 @@ public class SeasonController {
         return ResponseEntity.ok(seasonService.getByUserId(idUser));
     }
 
+    @GetMapping("/active/{idUser}")
+    @Operation(
+            description = "Return the active season diet by user id.",
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = SeasonResponsePayload.class
+                            )
+                    )
+            ),
+            security = {@SecurityRequirement(
+                    name = SECURITY_SCHEME_NAME,
+                    scopes = READ
+            )}
+    )
+    ResponseEntity<SeasonResponsePayload> getActiveByUser(@PathVariable Long idUser) {
+        return ResponseEntity.ok().build();
+    }
+
 }

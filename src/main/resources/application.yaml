@@ -9,10 +9,15 @@ spring:
     username: guest
     password: guest
     driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      platform: mysql
+      mode: ALWAYS
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+    generate-ddl: false
 
 logging:
   level:

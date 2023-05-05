@@ -19,6 +19,6 @@ public record MealDayResponsePayload(
     }
 
     public static MealDayResponsePayload fromEntity(MealDayEntity mealDays) {
-        return new MealDayResponsePayload(mealDays.getId(), mealDays.getDate(), MealResponsePayload.fromEntity(mealDays.getMeals()));
+        return new MealDayResponsePayload(mealDays.getId(), mealDays.getDay(), MealResponsePayload.fromEntity(mealDays.getMeals()));
     }
 }
