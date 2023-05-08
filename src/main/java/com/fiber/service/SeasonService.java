@@ -1,6 +1,7 @@
 package com.fiber.service;
 
 import com.fiber.error.excption.ResourceNotFoundException;
+import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,10 @@ public class SeasonService {
                 .map(SeasonResponsePayload::fromEntity)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found active season for userid:[" + idUser + "]"));
 
+    }
+
+    public SeasonResponsePayload create(SeasonCreateRequestPayload payload) {
+        return null;
     }
 
 

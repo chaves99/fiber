@@ -1,5 +1,6 @@
 package com.fiber.controller;
 
+import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.service.SeasonService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,10 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -70,6 +68,33 @@ public class SeasonController {
     )
     ResponseEntity<SeasonResponsePayload> getActiveByUser(@PathVariable Long idUser) {
         return ResponseEntity.ok(seasonService.getActiveByUser(idUser));
+    }
+
+    @PostMapping
+    @Operation(
+            description = "Create a new season diet.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = SeasonCreateRequestPayload.class
+                            )
+                    )
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = SeasonResponsePayload.class
+                            )
+                    )
+            ),
+            security = {@SecurityRequirement(
+                    name = SECURITY_SCHEME_NAME,
+                    scopes = READ
+            )}
+    )
+    ResponseEntity<SeasonResponsePayload> create(@RequestBody SeasonCreateRequestPayload payload) {
+        return ResponseEntity.ok(seasonService.create(payload));
     }
 
 }
