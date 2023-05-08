@@ -69,7 +69,7 @@ public class SeasonController {
             )}
     )
     ResponseEntity<SeasonResponsePayload> getActiveByUser(@PathVariable Long idUser) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(seasonService.getActiveByUser(idUser));
     }
 
 }

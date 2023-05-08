@@ -37,6 +37,7 @@ public class DietSeasonEntity {
 
     private Boolean active;
 
+    @ManyToOne
     private UserEntity user;
 
     @OneToMany
