@@ -1,9 +1,12 @@
 package com.fiber.service;
 
+import com.fiber.entity.DietSeasonEntity;
+import com.fiber.entity.UserEntity;
 import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
+import com.fiber.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import java.util.stream.Collectors;
 public class SeasonService {
 
     private final DietSeasonRepository seasonRepository;
+
+    private final UserRepository userRepository;
 
     public List<SeasonResponsePayload> getByUserId(Long id) {
         var seasonEntity = seasonRepository.findByUserId(id);
@@ -40,7 +45,15 @@ public class SeasonService {
     }
 
     public SeasonResponsePayload create(SeasonCreateRequestPayload payload) {
-        return null;
+        try {
+            UserEntity user = userRepository.findById(payload.userId())
+                    .orElseThrow(() -> new ResourceNotFoundException(""));
+            DietSeasonEntity entity = payload.toEntity(user, true);
+            return SeasonResponsePayload.fromEntity(seasonRepository.save(entity));
+        } catch (Exception e) {
+            log.error("create season error", e);
+            throw e;
+        }
     }
 
 

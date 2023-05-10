@@ -38,8 +38,9 @@ public class DietSeasonEntity {
     private Boolean active;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "dietSeason")
     private List<MealDayEntity> mealDays;
 }

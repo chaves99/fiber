@@ -1,6 +1,10 @@
 package com.fiber.payload.http.season;
 
+import com.fiber.entity.DietSeasonEntity;
+import com.fiber.entity.UserEntity;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public record SeasonCreateRequestPayload(
         String name,
@@ -13,4 +17,10 @@ public record SeasonCreateRequestPayload(
         LocalDate finalDate,
         Long userId
 ) {
+    public DietSeasonEntity toEntity(UserEntity user, Boolean active) {
+        return new DietSeasonEntity(null, name(),
+                description(), caloriesGoal(), carbohydrateGoal(),
+                proteinGoal(), fatGoal(), initialDate(), finalDate(),
+                active, user, List.of());
+    }
 }

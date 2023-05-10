@@ -20,9 +20,11 @@ public record SeasonResponsePayload(
 ) {
 
     public static SeasonResponsePayload fromEntity(DietSeasonEntity entity) {
+        List<MealDayResponsePayload> mealDay = MealDayResponsePayload
+                .fromEntity(entity.getMealDays() == null ? List.of() : entity.getMealDays());
         return new SeasonResponsePayload(entity.getId(), entity.getName(),
                 entity.getDescription(), entity.getCaloriesGoal(), entity.getCarbohydrateGoal(),
                 entity.getProteinGoal(), entity.getFatGoal(), entity.getInitialDate(),
-                entity.getFinalDate(), entity.getActive(), MealDayResponsePayload.fromEntity(entity.getMealDays()));
+                entity.getFinalDate(), entity.getActive(), mealDay);
     }
 }

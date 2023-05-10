@@ -23,6 +23,10 @@ public class MealDayEntity {
 
     private LocalDate day;
 
+    @ManyToOne
+    @JoinColumn(name = "id_diet_season")
+    private DietSeasonEntity dietSeason;
+
     @OneToMany
     private List<MealEntity> meals;
 
