@@ -20,6 +20,16 @@ public class MealEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    private String description;
+
+    @ManyToMany
+    @JoinTable(
+            name = "food_per_meal",
+            joinColumns = @JoinColumn(name = "id_meal"),
+            inverseJoinColumns = @JoinColumn(name = "id_food")
+    )
     private List<FoodEntity> foods;
+
+    @ManyToMany(mappedBy = "meals")
+    private List<MealDayEntity> mealDays;
 }

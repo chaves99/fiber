@@ -27,7 +27,12 @@ public class MealDayEntity {
     @JoinColumn(name = "id_diet_season")
     private DietSeasonEntity dietSeason;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "meal_per_day",
+            joinColumns = @JoinColumn(name = "id_meal_day"),
+            inverseJoinColumns = @JoinColumn(name = "id_meal")
+    )
     private List<MealEntity> meals;
 
 }

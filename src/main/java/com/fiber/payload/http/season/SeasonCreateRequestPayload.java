@@ -21,6 +21,6 @@ public record SeasonCreateRequestPayload(
         return new DietSeasonEntity(null, name(),
                 description(), caloriesGoal(), carbohydrateGoal(),
                 proteinGoal(), fatGoal(), initialDate(), finalDate(),
-                active, user, List.of());
+                active, user, null);
     }
 }

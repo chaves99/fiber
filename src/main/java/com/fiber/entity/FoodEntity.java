@@ -1,15 +1,13 @@
 package com.fiber.entity;
 
 import com.fiber.payload.http.food.RegisterFoodRequestPayload;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Table(name = "food")
 @Entity
@@ -37,11 +35,14 @@ public class FoodEntity {
 
     private Double fat;
 
+    @ManyToMany(mappedBy = "foods")
+    private List<MealEntity> meals;
+
     public static FoodEntity from(RegisterFoodRequestPayload payload) {
         return new FoodEntity(null, payload.name(),
                 payload.baseQuantity(), payload.carbohydrate(),
                 payload.protein(), payload.fiber(),
-                payload.calories(), payload.fat());
+                payload.calories(), payload.fat(), null);
     }
 
     public void update(RegisterFoodRequestPayload payload) {
