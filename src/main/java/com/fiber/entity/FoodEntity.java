@@ -35,6 +35,8 @@ public class FoodEntity {
 
     private Double fat;
 
+    //TODO add a food type; Ex: Fruit, Grains, Vegetables, etc...
+
     @ManyToMany(mappedBy = "foods")
     private List<MealEntity> meals;
 

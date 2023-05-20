@@ -4,7 +4,6 @@ import com.fiber.entity.DietSeasonEntity;
 import com.fiber.entity.UserEntity;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public record SeasonCreateRequestPayload(
         String name,

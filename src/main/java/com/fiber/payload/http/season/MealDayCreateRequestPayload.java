@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record MealDayCreateRequestPayload(
+        Long userId,
         LocalDate day,
         Long idDietSeason,
         List<MealRequestPayload> meals
