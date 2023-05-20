@@ -56,5 +56,9 @@ public class SeasonService {
         }
     }
 
+    public DietSeasonEntity createIfNotExists(Long seasonId, Long userId) {
+        return null;
+    }
+
 
 }
