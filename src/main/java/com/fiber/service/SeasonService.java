@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,8 +57,19 @@ public class SeasonService {
         }
     }
 
+    /**
+     * create one if it doesn't exist with given id
+     * @param seasonId is used to try to get the diet season
+     * @param userId is used if it needs to create a new diet season
+     * @return
+     */
     public DietSeasonEntity createIfNotExists(Long seasonId, Long userId) {
-        return null;
+        Optional<DietSeasonEntity> dietSeason = seasonRepository.findById(seasonId);
+        if (dietSeason.isPresent())
+            return dietSeason.get();
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(""));
+        return seasonRepository.save(DietSeasonEntity.builder().user(user).build());
     }
 
 
