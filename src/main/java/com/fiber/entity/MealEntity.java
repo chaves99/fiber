@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Table(name = "meal")
@@ -20,7 +22,11 @@ public class MealEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String description;
+    private LocalDate day;
+
+    private LocalTime time;
+
+    private int order;
 
     @ManyToMany
     @JoinTable(
@@ -31,5 +37,5 @@ public class MealEntity {
     private List<FoodEntity> foods;
 
     @ManyToMany(mappedBy = "meals")
-    private List<MealDayEntity> mealDays;
+    private List<DietSeasonEntity> mealDays;
 }

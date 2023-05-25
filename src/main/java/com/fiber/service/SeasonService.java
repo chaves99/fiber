@@ -59,12 +59,14 @@ public class SeasonService {
 
     /**
      * create one if it doesn't exist with given id
+     *
      * @param seasonId is used to try to get the diet season
-     * @param userId is used if it needs to create a new diet season
+     * @param userId   is used if it needs to create a new diet season
      * @return
      */
     public DietSeasonEntity createIfNotExists(Long seasonId, Long userId) {
-        Optional<DietSeasonEntity> dietSeason = seasonRepository.findById(seasonId);
+        Optional<DietSeasonEntity> dietSeason = seasonRepository.findById(seasonId)
+                .or(() -> seasonRepository.findActiveByUserId(userId));
         if (dietSeason.isPresent())
             return dietSeason.get();
         UserEntity user = userRepository.findById(userId)

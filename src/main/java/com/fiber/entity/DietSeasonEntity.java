@@ -42,6 +42,6 @@ public class DietSeasonEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "dietSeason")
-    private List<MealDayEntity> mealDays;
+    @OneToMany
+    private List<MealEntity> meals;
 }

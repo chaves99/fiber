@@ -21,7 +21,7 @@ Fiber is an app for manage and store your diet.
 * initialDate
 * finalDate
 * active
-* list of MealDay ids
+* list of Meal ids
 
 ###### Food:
 * id
@@ -35,13 +35,8 @@ Fiber is an app for manage and store your diet.
 
 ###### Meal:
 * id
-* description
+* day
+* hour
+* order
 * list of food
-* list of mealDay
-
-###### MealDay:
-* id
-* date
-* list of meal
-
 

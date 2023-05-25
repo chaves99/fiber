@@ -28,32 +28,13 @@ CREATE TABLE IF NOT EXISTS diet_season (
     FOREIGN KEY(user_id) REFERENCES user(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS meal_day (
-    id bigint NOT NULL AUTO_INCREMENT,
-    day date DEFAULT NULL,
-    id_diet_season bigint NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY(id_diet_season) REFERENCES diet_season(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS meal_per_day (
-    id_meal_day bigint NOT NULL,
-    id_meal bigint NOT NULL,
-    FOREIGN KEY (id_meal_day) REFERENCES meal_day(id),
-    FOREIGN KEY (id_meal) REFERENCES meal(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 CREATE TABLE IF NOT EXISTS meal (
     id bigint NOT NULL AUTO_INCREMENT,
-    description VARCHAR(255) DEFAULT NULL,
+    meal_day DATE NOT NULL,
+    meal_time TIMESTAMP NOT NULL,
+    meal_order INT NOT NULL,
+    id_diet_season bigint NOT NULL,
     PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS food_per_meal (
-    id_food bigint NOT NULL,
-    id_meal bigint NOT NULL,
-    FOREIGN KEY (id_food) REFERENCES food(id),
-    FOREIGN KEY (id_meal) REFERENCES meal(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS food (
@@ -67,4 +48,11 @@ CREATE TABLE IF NOT EXISTS food (
     fat double DEFAULT NULL,
     id_meal bigint NOT NULL,
     PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS food_per_meal (
+    id_food bigint NOT NULL,
+    id_meal bigint NOT NULL,
+    FOREIGN KEY (id_food) REFERENCES food(id),
+    FOREIGN KEY (id_meal) REFERENCES meal(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
