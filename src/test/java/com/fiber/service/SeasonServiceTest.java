@@ -2,10 +2,9 @@ package com.fiber.service;
 
 import com.fiber.entity.DietSeasonEntity;
 import com.fiber.entity.UserEntity;
-import com.fiber.error.excption.ResourceNotFoundException;
+import com.fiber.payload.http.season.SeasonCreateRequestPayload;
+import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
-import com.fiber.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +13,11 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
 import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class SeasonServiceTest {
@@ -26,37 +29,27 @@ public class SeasonServiceTest {
     DietSeasonRepository seasonRepository;
 
     @Mock
-    UserRepository userRepository;
+    UserService userService;
 
     private final DietSeasonEntity entity =
             new DietSeasonEntity(1L, "Test", "Test", 10d, 10d, 10d, 10d, null, null, true, null, null);
 
-    @Test
-    public void createIfNotExists_returnExistingSeasonSuccess() {
-        Mockito.when(seasonRepository.findById(1L)).thenReturn(Optional.of(entity));
-        DietSeasonEntity dietSeason = service.createIfNotExists(1L, 1L);
-        Mockito.verify(seasonRepository, Mockito.never()).save(Mockito.any(DietSeasonEntity.class));
-        Assert.isTrue(entity.equals(dietSeason), "The entities should be equals");
-    }
 
     @Test
-    public void createIfNotExists_returnNewSeasonSuccess() {
-        entity.setUser(UserEntity.builder().id(1L).build());
-        Mockito.when(seasonRepository.findById(1L)).thenReturn(Optional.empty());
-        Mockito.when(userRepository.findById(1L))
-                .thenReturn(Optional.of(UserEntity.builder().id(1L).build()));
+    public void create_shouldCreateSeason() {
+        SeasonCreateRequestPayload payload = new SeasonCreateRequestPayload("Test Season",
+                "Description Season", 10d, 10d, 10d, 0d, LocalDate.now(), null, 1L);
+//        DietSeasonEntity dietSeasonEntity = DietSeasonEntity.builder().id(1l).build();
+        UserEntity user = UserEntity.builder().id(1L).name("User Test").build();
+        DietSeasonEntity dietSeasonMock = mock(DietSeasonEntity.class);
 
-        Mockito.when(seasonRepository.save(Mockito.any())).thenReturn(entity);
+        when(userService.get(anyLong())).thenReturn(user);
+        when(seasonRepository.save(any(DietSeasonEntity.class)))
+                .thenReturn(dietSeasonMock);
 
-        DietSeasonEntity dietSeason = service.createIfNotExists(1L, 1L);
+        SeasonResponsePayload seasonResponsePayload = service.create(payload);
 
-        Assert.isTrue(dietSeason.getUser().getId().equals(1L), "User's id should be equals");
+        verify(dietSeasonMock, only()).toResponsePayload();
     }
 
-    @Test
-    public void createIfNotExists_userNotFind() {
-        Mockito.when(seasonRepository.findById(1L)).thenReturn(Optional.empty());
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.empty());
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.createIfNotExists(1L, 1L));
-    }
 }

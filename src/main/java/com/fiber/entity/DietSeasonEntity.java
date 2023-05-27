@@ -1,5 +1,6 @@
 package com.fiber.entity;
 
+import com.fiber.payload.http.season.SeasonResponsePayload;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,4 +45,11 @@ public class DietSeasonEntity {
 
     @OneToMany
     private List<MealEntity> meals;
+
+    public SeasonResponsePayload toResponsePayload() {
+        return new SeasonResponsePayload(getId(), getName(),
+                getDescription(), getCaloriesGoal(), getCarbohydrateGoal(),
+                getProteinGoal(), getFatGoal(), getInitialDate(),
+                getFinalDate(), getActive());
+    }
 }
