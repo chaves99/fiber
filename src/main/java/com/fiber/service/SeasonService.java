@@ -1,18 +1,16 @@
 package com.fiber.service;
 
 import com.fiber.entity.DietSeasonEntity;
-import com.fiber.entity.UserEntity;
 import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
-import com.fiber.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,10 +43,13 @@ public class SeasonService {
 
     }
 
-    public SeasonResponsePayload create(SeasonCreateRequestPayload payload) {
+    public DietSeasonEntity create(SeasonCreateRequestPayload payload) {
         log.info("create - payload:{}", payload);
         DietSeasonEntity seasonEntity = payload.toEntity(userService.get(payload.userId()), true);
-        return seasonRepository.save(seasonEntity).toResponsePayload();
+        if (seasonEntity.getInitialDate() == null) {
+            seasonEntity.setInitialDate(LocalDate.now());
+        }
+        return seasonRepository.save(seasonEntity);
     }
 
 }

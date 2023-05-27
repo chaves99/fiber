@@ -94,7 +94,7 @@ public class SeasonController {
             )}
     )
     ResponseEntity<SeasonResponsePayload> create(@RequestBody SeasonCreateRequestPayload payload) {
-        return ResponseEntity.ok(seasonService.create(payload));
+        return ResponseEntity.ok(seasonService.create(payload).toResponsePayload());
     }
 
 }
