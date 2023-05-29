@@ -2,6 +2,7 @@ package com.fiber.controller;
 
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
+import com.fiber.payload.http.season.SeasonUpdateDateRequestPayload;
 import com.fiber.service.SeasonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -95,6 +96,29 @@ public class SeasonController {
     )
     ResponseEntity<SeasonResponsePayload> create(@RequestBody SeasonCreateRequestPayload payload) {
         return ResponseEntity.ok(seasonService.create(payload).toResponsePayload());
+    }
+
+    @PutMapping("/final-date/{seasonId}")
+    @Operation(
+            description = "Update the diet season's final date.",
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = SeasonResponsePayload.class
+                            )
+                    )
+            ),
+            security = {@SecurityRequirement(
+                    name = SECURITY_SCHEME_NAME,
+                    scopes = READ
+            )}
+    )
+    ResponseEntity<SeasonResponsePayload> updateFinalDate(
+            @PathVariable Long seasonId,
+            @RequestBody SeasonUpdateDateRequestPayload payload
+    ) {
+        return ResponseEntity.ok(seasonService.updateFinalDate(seasonId, payload.finalDate()).toResponsePayload());
     }
 
 }

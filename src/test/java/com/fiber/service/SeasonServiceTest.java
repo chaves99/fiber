@@ -12,10 +12,17 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class SeasonServiceTest {
@@ -57,6 +64,28 @@ public class SeasonServiceTest {
         service.create(payload);
 
         assertThat(captor.getValue().getInitialDate()).isNotNull();
+    }
+
+    @Test
+    public void updateFinalDate_shouldUpdate() {
+        when(seasonRepository.findById(anyLong()))
+                .thenReturn(Optional.of(DietSeasonEntity.builder().id(1L).build()));
+
+        ArgumentCaptor<DietSeasonEntity> captor = ArgumentCaptor.forClass(DietSeasonEntity.class);
+        doReturn(mock(DietSeasonEntity.class)).when(seasonRepository).saveAndFlush(captor.capture());
+
+        LocalDate now = LocalDate.now();
+        service.updateFinalDate(1L, now);
+
+        assertThat(captor.getValue().getFinalDate()).isEqualTo(now);
+    }
+
+    @Test
+    public void updateFinalDate_shouldThrowNotFoundException() {
+        when(seasonRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.updateFinalDate(1L, null));
     }
 
 }

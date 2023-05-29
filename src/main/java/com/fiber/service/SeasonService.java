@@ -52,4 +52,13 @@ public class SeasonService {
         return seasonRepository.save(seasonEntity);
     }
 
+    public DietSeasonEntity updateFinalDate(Long seasonId, LocalDate finalDate) {
+        log.info("updateFinalDate - season id:{} finalDate:{}", seasonId, finalDate);
+        DietSeasonEntity seasonEntity = seasonRepository.findById(seasonId)
+                .orElseThrow(() -> new ResourceNotFoundException("Not foun season with id:[" + seasonId + "]"));
+        if (finalDate != null) {
+            seasonEntity.setFinalDate(finalDate);
+        }
+        return seasonRepository.saveAndFlush(seasonEntity);
+    }
 }
