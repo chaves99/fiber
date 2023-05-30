@@ -46,16 +46,26 @@ public class SeasonService {
     public DietSeasonEntity create(SeasonCreateRequestPayload payload) {
         log.info("create - payload:{}", payload);
         DietSeasonEntity seasonEntity = payload.toEntity(userService.get(payload.userId()), true);
+        disableLastSeasonByUser(payload.userId());
         if (seasonEntity.getInitialDate() == null) {
             seasonEntity.setInitialDate(LocalDate.now());
         }
         return seasonRepository.save(seasonEntity);
     }
 
+    private void disableLastSeasonByUser(Long userId) {
+        var activeByUserId = seasonRepository.findActiveByUserId(userId);
+        activeByUserId.ifPresent(season -> {
+            log.info("disabling last season by user:[{}]", userId);
+            season.setActive(Boolean.FALSE);
+            seasonRepository.saveAndFlush(season);
+        });
+    }
+
     public DietSeasonEntity updateFinalDate(Long seasonId, LocalDate finalDate) {
         log.info("updateFinalDate - season id:{} finalDate:{}", seasonId, finalDate);
         DietSeasonEntity seasonEntity = seasonRepository.findById(seasonId)
-                .orElseThrow(() -> new ResourceNotFoundException("Not foun season with id:[" + seasonId + "]"));
+                .orElseThrow(() -> new ResourceNotFoundException("Not found season with id:[" + seasonId + "]"));
         if (finalDate != null) {
             seasonEntity.setFinalDate(finalDate);
         }
