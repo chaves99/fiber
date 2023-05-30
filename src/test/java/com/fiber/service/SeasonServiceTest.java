@@ -21,6 +21,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -42,13 +43,12 @@ public class SeasonServiceTest {
         SeasonCreateRequestPayload payload = new SeasonCreateRequestPayload("Test Season",
                 "Description Season", 10d, 10d, 10d, 0d, LocalDate.now(), null, 1L);
         UserEntity user = UserEntity.builder().id(1L).name("User Test").build();
-        DietSeasonEntity dietSeasonMock = mock(DietSeasonEntity.class);
 
         when(userService.get(anyLong())).thenReturn(user);
 
         service.create(payload);
 
-        verify(seasonRepository, only()).save(any(DietSeasonEntity.class));
+        verify(seasonRepository, times(1)).save(any(DietSeasonEntity.class));
     }
 
     @Test
