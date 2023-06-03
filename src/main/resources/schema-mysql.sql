@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS food (
     fiber double DEFAULT NULL,
     protein double DEFAULT NULL,
     fat double DEFAULT NULL,
-    id_meal bigint NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -37,14 +37,11 @@ public class FoodEntity {
 
     //TODO add a food type; Ex: Fruit, Grains, Vegetables, etc...
 
-    @ManyToMany(mappedBy = "foods")
-    private List<MealEntity> meals;
-
     public static FoodEntity from(RegisterFoodRequestPayload payload) {
         return new FoodEntity(null, payload.name(),
                 payload.baseQuantity(), payload.carbohydrate(),
                 payload.protein(), payload.fiber(),
-                payload.calories(), payload.fat(), null);
+                payload.calories(), payload.fat());
     }
 
     public void update(RegisterFoodRequestPayload payload) {
