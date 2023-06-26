@@ -13,4 +13,8 @@ public class MealsService {
     private final MealRepository mealRepository;
 
     private final SeasonService seasonService;
+
+    public void create() {
+        
+    }
 }
