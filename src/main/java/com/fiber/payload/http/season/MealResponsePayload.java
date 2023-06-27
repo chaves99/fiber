@@ -2,11 +2,16 @@ package com.fiber.payload.http.season;
 
 import com.fiber.entity.MealEntity;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public record MealResponsePayload(
-        Long id
+        Long id,
+        LocalDate day,
+        LocalTime time,
+        int order
 ) {
     public static List<MealResponsePayload> fromEntity(List<MealEntity> meals) {
         return meals
@@ -16,6 +21,6 @@ public record MealResponsePayload(
     }
 
     public static MealResponsePayload fromEntity(MealEntity meal) {
-        return new MealResponsePayload(meal.getId());
+        return new MealResponsePayload(meal.getId(), meal.getDay(), meal.getTime(), meal.getOrder());
     }
 }

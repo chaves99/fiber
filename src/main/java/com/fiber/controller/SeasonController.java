@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import static com.fiber.util.OpenApiConstants.SECURITY_SCHEME_NAME;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "season")
+@Tag(name = "Season")
 public class SeasonController {
 
     private final SeasonService seasonService;

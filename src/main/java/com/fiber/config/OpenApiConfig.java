@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -18,7 +19,21 @@ import org.springframework.context.annotation.Configuration;
                 contact = @Contact(
                         name = "Vinicius Chaves",
                         email = "viniciusbaleia1999@gmail.com")
-        )
+        ),
+        tags = {
+                @Tag(
+                        name = "Food"
+                ),
+                @Tag(
+                        name = "Season"
+                ),
+                @Tag(
+                        name = "User"
+                ),
+                @Tag(
+                        name = "Meal"
+                )
+        }
 )
 @SecurityScheme(
         name = OpenApiConstants.SECURITY_SCHEME_NAME,

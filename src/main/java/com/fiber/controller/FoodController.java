@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import static com.fiber.util.OpenApiConstants.SECURITY_SCHEME_NAME;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "food")
+@Tag(name = "Food")
 public class FoodController {
 
     private final FoodService foodService;
@@ -32,7 +34,6 @@ public class FoodController {
                     name = SECURITY_SCHEME_NAME,
                     scopes = READ
             )}
-
     )
     public ResponseEntity<FoodEntity> register(@RequestBody RegisterFoodRequestPayload body) {
         log.info("register - body:{}", body);
