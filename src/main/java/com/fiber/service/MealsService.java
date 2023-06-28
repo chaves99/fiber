@@ -1,6 +1,7 @@
 package com.fiber.service;
 
 import com.fiber.entity.DietSeasonEntity;
+import com.fiber.entity.FoodEntity;
 import com.fiber.entity.MealEntity;
 import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.season.MealRequestPayload;
@@ -9,6 +10,8 @@ import com.fiber.repository.MealRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,10 +26,9 @@ public class MealsService {
 
     public MealResponsePayload create(MealRequestPayload payload) {
         Long seasonId = payload.seasonId();
-        DietSeasonEntity dietSeasonEntity = seasonService.getDietSeason(seasonId)
+        DietSeasonEntity season = seasonService.getDietSeason(seasonId)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found season with id:" + seasonId));
-
-        MealEntity entity = payload.toEntity();
-        return null;
+        List<FoodEntity> foods = foodService.getById(payload.foods());
+        return MealResponsePayload.fromEntity(mealRepository.save(MealEntity.toEntity(season, foods, payload)));
     }
 }

@@ -1,5 +1,6 @@
 package com.fiber.entity;
 
+import com.fiber.payload.http.season.MealRequestPayload;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +39,16 @@ public class MealEntity {
     )
     private List<FoodEntity> foods;
 
-    @ManyToMany(mappedBy = "meals")
-    private List<DietSeasonEntity> mealDays;
+    @ManyToOne
+    private DietSeasonEntity season;
+
+    public static MealEntity toEntity(DietSeasonEntity season, List<FoodEntity> foods, MealRequestPayload payload) {
+        MealEntity mealEntity = new MealEntity();
+        mealEntity.setFoods(foods);
+        mealEntity.setSeason(season);
+        mealEntity.setDay(LocalDate.now());
+        mealEntity.setTime(LocalTime.now());
+        mealEntity.setDescription(payload.description());
+        return mealEntity;
+    }
 }

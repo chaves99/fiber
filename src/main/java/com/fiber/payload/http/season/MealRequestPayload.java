@@ -10,7 +10,7 @@ import java.util.List;
 public record MealRequestPayload(
         Long seasonId,
         String description,
-        List<RegisterFoodRequestPayload> foods
+        List<Long> foods
 ) {
 
     public MealEntity toEntity() {

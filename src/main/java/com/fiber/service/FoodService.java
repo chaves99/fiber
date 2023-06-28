@@ -42,6 +42,10 @@ public class FoodService {
         return foodRepository.findById(id).orElseThrow();
     }
 
+    public List<FoodEntity> getById(List<Long> ids) {
+        return foodRepository.findAllById(ids);
+    }
+
     public List<FoodEntity> getByName(String name) {
         return foodRepository.findByName(name);
     }
