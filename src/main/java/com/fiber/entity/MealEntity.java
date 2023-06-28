@@ -22,6 +22,8 @@ public class MealEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String description;
+
     private LocalDate day;
 
     private LocalTime time;

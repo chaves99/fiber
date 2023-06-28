@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,5 +71,9 @@ public class SeasonService {
             seasonEntity.setFinalDate(finalDate);
         }
         return seasonRepository.saveAndFlush(seasonEntity);
+    }
+
+    public Optional<DietSeasonEntity> getDietSeason(Long id) {
+        return seasonRepository.findById(id);
     }
 }
