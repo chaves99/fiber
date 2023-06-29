@@ -84,7 +84,7 @@ public class FoodController {
 
     @GetMapping
     @Operation(
-            description = "Delete a food.",
+            description = "Get all food.",
             security = {@SecurityRequirement(
                     name = SECURITY_SCHEME_NAME,
                     scopes = READ

@@ -29,7 +29,7 @@ public class MealEntity {
 
     private LocalTime time;
 
-    private int order;
+    private Integer order;
 
     @ManyToMany
     @JoinTable(
@@ -49,6 +49,7 @@ public class MealEntity {
         mealEntity.setDay(LocalDate.now());
         mealEntity.setTime(LocalTime.now());
         mealEntity.setDescription(payload.description());
+        mealEntity.setOrder(payload.order());
         return mealEntity;
     }
 }

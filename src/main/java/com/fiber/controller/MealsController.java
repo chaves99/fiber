@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.fiber.util.OpenApiConstants.READ;
 import static com.fiber.util.OpenApiConstants.SECURITY_SCHEME_NAME;
 
@@ -30,20 +32,20 @@ public class MealsController {
             )}
     )
     public ResponseEntity<MealResponsePayload> createMeal(@RequestBody MealRequestPayload payload) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(mealsService.create(payload));
     }
 
-    @GetMapping("/user/{userId}")
-    @Operation(
-            description = "Get meal by user",
-            security = {@SecurityRequirement(
-                    name = SECURITY_SCHEME_NAME,
-                    scopes = READ
-            )}
-    )
-    public ResponseEntity<?> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("/user/{userId}")
+//    @Operation(
+//            description = "Get meal by user",
+//            security = {@SecurityRequirement(
+//                    name = SECURITY_SCHEME_NAME,
+//                    scopes = READ
+//            )}
+//    )
+//    public ResponseEntity<List<MealResponsePayload>> getByUser(@PathVariable Long userId) {
+//        return ResponseEntity.ok().build();
+//    }
 
     @GetMapping("season/{idSeason}")
     @Operation(
@@ -53,20 +55,20 @@ public class MealsController {
                     scopes = READ
             )}
     )
-    public ResponseEntity<?> getBySeason(@PathVariable Long idSeason) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<MealResponsePayload>> getBySeason(@PathVariable Long idSeason) {
+        return ResponseEntity.ok(mealsService.get(idSeason));
     }
 
-    @GetMapping("/today/{userId}")
-    @Operation(
-            description = "Get today's meal by user id",
-            security = {@SecurityRequirement(
-                    name = SECURITY_SCHEME_NAME,
-                    scopes = READ
-            )}
-    )
-    public ResponseEntity<?> today(@PathVariable Long userId) {
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("/today/{userId}")
+//    @Operation(
+//            description = "Get today's meal by user id",
+//            security = {@SecurityRequirement(
+//                    name = SECURITY_SCHEME_NAME,
+//                    scopes = READ
+//            )}
+//    )
+//    public ResponseEntity<List<MealResponsePayload>> today(@PathVariable Long userId) {
+//        return ResponseEntity.ok().build();
+//    }
 
 }

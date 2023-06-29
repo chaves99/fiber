@@ -39,7 +39,7 @@ public class MealsServiceTest {
 
     @Test
     void create_shouldCreateMeal() {
-        MealRequestPayload payload = new MealRequestPayload(1L, "Description meal", List.of(1L, 2L));
+        MealRequestPayload payload = new MealRequestPayload(1L, "Description meal", 0, List.of(1L, 2L));
         ArgumentCaptor<MealEntity> captor = ArgumentCaptor.forClass(MealEntity.class);
         when(seasonService.getDietSeason(anyLong())).thenReturn(Optional.of(new DietSeasonEntity()));
         doReturn(mock(MealEntity.class)).when(mealRepository).save(captor.capture());
@@ -51,7 +51,7 @@ public class MealsServiceTest {
 
     @Test
     void create_shouldNotAcceptNullSeasonId() {
-        MealRequestPayload payload = new MealRequestPayload(null, "Description meal", List.of(1L, 2L));
+        MealRequestPayload payload = new MealRequestPayload(null, "Description meal", 0, List.of(1L, 2L));
 
         assertThatThrownBy(() -> service.create(payload)).isInstanceOf(ResourceNotFoundException.class);
     }
