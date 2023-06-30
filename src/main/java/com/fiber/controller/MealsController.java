@@ -6,6 +6,7 @@ import com.fiber.service.MealsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class MealsController {
                     scopes = READ
             )}
     )
-    public ResponseEntity<MealResponsePayload> createMeal(@RequestBody MealRequestPayload payload) {
+    public ResponseEntity<MealResponsePayload> createMeal(@RequestBody @Valid MealRequestPayload payload) {
         return ResponseEntity.ok(mealsService.create(payload));
     }
 
