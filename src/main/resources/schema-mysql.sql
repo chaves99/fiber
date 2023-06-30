@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS diet_season (
 CREATE TABLE IF NOT EXISTS meal (
     id bigint NOT NULL AUTO_INCREMENT,
     description VARCHAR(150) NOT NULL,
-    meal_day DATE NOT NULL,
-    meal_time TIMESTAMP NOT NULL,
+    day_time TIMESTAMP NOT NULL,
     meal_order INT NOT NULL,
     id_diet_season bigint NOT NULL,
     PRIMARY KEY (id)

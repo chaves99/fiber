@@ -49,7 +49,7 @@ public class MealsController {
 
     @GetMapping("season/{idSeason}")
     @Operation(
-            description = "Get meal by season",
+            description = "Get all meal by season",
             security = {@SecurityRequirement(
                     name = SECURITY_SCHEME_NAME,
                     scopes = READ

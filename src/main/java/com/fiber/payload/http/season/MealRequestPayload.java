@@ -2,8 +2,7 @@ package com.fiber.payload.http.season;
 
 import com.fiber.entity.MealEntity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record MealRequestPayload(
@@ -15,8 +14,7 @@ public record MealRequestPayload(
 
     public MealEntity toEntity() {
         MealEntity mealEntity = new MealEntity();
-        mealEntity.setTime(LocalTime.now());
-        mealEntity.setDay(LocalDate.now());
+        mealEntity.setDayTime(LocalDateTime.now());
         mealEntity.setDescription(description());
         mealEntity.setOrder(order());
         return mealEntity;

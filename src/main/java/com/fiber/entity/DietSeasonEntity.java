@@ -43,7 +43,7 @@ public class DietSeasonEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "season")
     private List<MealEntity> meals;
 
     public SeasonResponsePayload toResponsePayload() {

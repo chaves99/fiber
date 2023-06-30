@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "meal")
@@ -25,10 +24,9 @@ public class MealEntity {
 
     private String description;
 
-    private LocalDate day;
+    private LocalDateTime dayTime;
 
-    private LocalTime time;
-
+    @Column(name = "meal_order")
     private Integer order;
 
     @ManyToMany
@@ -40,14 +38,14 @@ public class MealEntity {
     private List<FoodEntity> foods;
 
     @ManyToOne
+    @JoinColumn(name = "id_diet_season")
     private DietSeasonEntity season;
 
     public static MealEntity toEntity(DietSeasonEntity season, List<FoodEntity> foods, MealRequestPayload payload) {
         MealEntity mealEntity = new MealEntity();
         mealEntity.setFoods(foods);
         mealEntity.setSeason(season);
-        mealEntity.setDay(LocalDate.now());
-        mealEntity.setTime(LocalTime.now());
+        mealEntity.setDayTime(LocalDateTime.now());
         mealEntity.setDescription(payload.description());
         mealEntity.setOrder(payload.order());
         return mealEntity;

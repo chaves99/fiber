@@ -31,7 +31,7 @@ public class MealsService {
         List<FoodEntity> foods = foodService.getById(payload.foods());
         MealEntity mealEntity = MealEntity.toEntity(season, foods, payload);
         if(mealEntity.getOrder() == null) {
-            mealEntity.setOrder(mealRepository.countByDay(mealEntity.getDay()));
+            mealEntity.setOrder(mealRepository.countByDay(mealEntity.getDayTime().toLocalDate()));
         }
         return MealResponsePayload.fromEntity(mealRepository.save(mealEntity));
     }
