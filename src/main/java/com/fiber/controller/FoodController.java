@@ -2,6 +2,7 @@ package com.fiber.controller;
 
 import com.fiber.entity.FoodEntity;
 import com.fiber.payload.http.food.RegisterFoodRequestPayload;
+import com.fiber.payload.http.food.SimpleFoodResponsePayload;
 import com.fiber.service.FoodService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,7 +12,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -35,9 +43,10 @@ public class FoodController {
                     scopes = READ
             )}
     )
-    public ResponseEntity<FoodEntity> register(@RequestBody RegisterFoodRequestPayload body) {
+    public ResponseEntity<SimpleFoodResponsePayload> register(@RequestBody RegisterFoodRequestPayload body) {
         log.info("register - body:{}", body);
-        return ResponseEntity.ok(foodService.create(body));
+        FoodEntity foodEntity = foodService.create(body);
+        return ResponseEntity.ok(SimpleFoodResponsePayload.fromEntity(foodEntity));
     }
 
     @PutMapping("/{id}")
@@ -55,10 +64,11 @@ public class FoodController {
             )}
 
     )
-    public ResponseEntity<FoodEntity> update(@RequestBody RegisterFoodRequestPayload payload,
-                                             @PathVariable Long id) {
+    public ResponseEntity<SimpleFoodResponsePayload> update(@RequestBody RegisterFoodRequestPayload payload,
+                                                            @PathVariable Long id) {
         log.info("update - id:{}", id);
-        return ResponseEntity.ok(foodService.update(payload, id));
+        FoodEntity foodEntity = foodService.update(payload, id);
+        return ResponseEntity.ok(SimpleFoodResponsePayload.fromEntity(foodEntity));
     }
 
     @DeleteMapping("/{id}")
@@ -91,9 +101,10 @@ public class FoodController {
             )}
 
     )
-    public ResponseEntity<List<FoodEntity>> getAll() {
+    public ResponseEntity<List<SimpleFoodResponsePayload>> getAll() {
         log.info("getAll");
-        return ResponseEntity.ok(foodService.getAll());
+        List<FoodEntity> entities = foodService.getAll();
+        return ResponseEntity.ok(SimpleFoodResponsePayload.fromEntity(entities));
     }
 
     @GetMapping("/{id}")
@@ -111,9 +122,10 @@ public class FoodController {
             )}
 
     )
-    public ResponseEntity<FoodEntity> getById(@PathVariable Long id) {
+    public ResponseEntity<SimpleFoodResponsePayload> getById(@PathVariable Long id) {
         log.info("getById - id:{}", id);
-        return ResponseEntity.ok(foodService.getById(id));
+        FoodEntity foodEntity = foodService.getById(id);
+        return ResponseEntity.ok(SimpleFoodResponsePayload.fromEntity(foodEntity));
     }
 
     @GetMapping("/search/{name}")
@@ -132,8 +144,9 @@ public class FoodController {
             )}
 
     )
-    public ResponseEntity<List<FoodEntity>> getByName(@PathVariable String name) {
+    public ResponseEntity<List<SimpleFoodResponsePayload>> getByName(@PathVariable String name) {
         log.info("getByName - name:{}", name);
-        return ResponseEntity.ok(foodService.getByName(name));
+        List<FoodEntity> entities = foodService.getByName(name);
+        return ResponseEntity.ok(SimpleFoodResponsePayload.fromEntity(entities));
     }
 }
