@@ -1,5 +1,6 @@
 package com.fiber.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +41,8 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UnitMeasurementHeight heightUnit;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<DietSeasonEntity> dietSeason;
 
     @Override

@@ -1,8 +1,16 @@
 package com.fiber.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fiber.payload.http.food.RegisterFoodRequestPayload;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class FoodEntity {
 
     @Id
@@ -35,13 +44,16 @@ public class FoodEntity {
 
     private Double fat;
 
-    //TODO add a food type; Ex: Fruit, Grains, Vegetables, etc...
+    @OneToMany(mappedBy = "key.food")
+    @JsonManagedReference
+    @JsonBackReference
+    private List<FoodPerMealEntity> foodPerMeal;
 
     public static FoodEntity from(RegisterFoodRequestPayload payload) {
         return new FoodEntity(null, payload.name(),
                 payload.baseQuantity(), payload.carbohydrate(),
                 payload.protein(), payload.fiber(),
-                payload.calories(), payload.fat());
+                payload.calories(), payload.fat(), null);
     }
 
     public void update(RegisterFoodRequestPayload payload) {

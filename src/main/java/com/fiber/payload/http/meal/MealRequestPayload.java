@@ -1,4 +1,4 @@
-package com.fiber.payload.http.season;
+package com.fiber.payload.http.meal;
 
 import com.fiber.entity.MealEntity;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,7 +13,7 @@ public record MealRequestPayload(
         Integer order,
         @NotNull(message = "foods field cannot be null")
         @NotEmpty(message = "foods field cannot be empty")
-        List<Long> foods
+        List<FoodMealRequestPayload> foods
 ) {
 
     public MealEntity toEntity() {

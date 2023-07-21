@@ -1,7 +1,7 @@
 package com.fiber.controller;
 
-import com.fiber.payload.http.season.MealRequestPayload;
-import com.fiber.payload.http.season.MealResponsePayload;
+import com.fiber.payload.http.meal.MealRequestPayload;
+import com.fiber.payload.http.meal.MealResponsePayload;
 import com.fiber.service.MealsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

@@ -41,3 +41,8 @@ Fiber is an app for manage and store your diet.
 * list of food
 * season id
 
+###### Food per Meal:
+* food id
+* meal id
+* quantity
+

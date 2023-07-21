@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS food (
 CREATE TABLE IF NOT EXISTS food_per_meal (
     id_food bigint NOT NULL,
     id_meal bigint NOT NULL,
+    quantity double NOT NULL,
     FOREIGN KEY (id_food) REFERENCES food(id),
     FOREIGN KEY (id_meal) REFERENCES meal(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

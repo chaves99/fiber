@@ -1,4 +1,4 @@
-package com.fiber.payload.http.season;
+package com.fiber.payload.http.meal;
 
 import com.fiber.entity.MealEntity;
 
@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 public record MealResponsePayload(
         Long id,
         LocalDateTime dayTime,
-        int order
+        int order,
+        List<FoodMealResponsePayload> foods
+
 ) {
     public static List<MealResponsePayload> fromEntity(List<MealEntity> meals) {
         return meals
@@ -19,6 +21,6 @@ public record MealResponsePayload(
     }
 
     public static MealResponsePayload fromEntity(MealEntity meal) {
-        return new MealResponsePayload(meal.getId(), meal.getDayTime(), meal.getOrder());
+        return new MealResponsePayload(meal.getId(), meal.getDayTime(), meal.getOrder(), FoodMealResponsePayload.from(meal.getFoodPerMeal()));
     }
 }

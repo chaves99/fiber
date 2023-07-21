@@ -1,5 +1,7 @@
 package com.fiber.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,9 +43,11 @@ public class DietSeasonEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserEntity user;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "season")
+    @JsonManagedReference
     private List<MealEntity> meals;
 
     public SeasonResponsePayload toResponsePayload() {

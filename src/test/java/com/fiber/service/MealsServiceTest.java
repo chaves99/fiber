@@ -3,7 +3,7 @@ package com.fiber.service;
 import com.fiber.entity.DietSeasonEntity;
 import com.fiber.entity.MealEntity;
 import com.fiber.error.excption.ResourceNotFoundException;
-import com.fiber.payload.http.season.MealRequestPayload;
+import com.fiber.payload.http.meal.MealRequestPayload;
 import com.fiber.repository.MealRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
