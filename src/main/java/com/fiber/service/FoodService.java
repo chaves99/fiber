@@ -47,6 +47,6 @@ public class FoodService {
     }
 
     public List<FoodEntity> getByName(String name) {
-        return foodRepository.findByName(name);
+        return foodRepository.findByNameContaining(name);
     }
 }

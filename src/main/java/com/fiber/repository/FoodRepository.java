@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 
-    List<FoodEntity> findByName(String name);
+    List<FoodEntity> findByNameContaining(String name);
 }
