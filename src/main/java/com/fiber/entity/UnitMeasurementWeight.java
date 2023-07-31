@@ -12,6 +12,6 @@ public enum UnitMeasurementWeight {
         return Stream.of(values())
                 .filter(e -> e.name().equals(name))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

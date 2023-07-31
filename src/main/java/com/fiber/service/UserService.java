@@ -28,9 +28,9 @@ public class UserService {
     }
 
     public UserEntity get(Long id) {
-        return this.userRepository.findById(id).orElseThrow(() -> {
-            throw new RuntimeException("User not found");
-        });
+        return this.userRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public UserEntity update(Long id, UserUpdateRequestPayload payload) {

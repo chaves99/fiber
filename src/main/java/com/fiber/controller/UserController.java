@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -83,7 +84,7 @@ public class UserController {
                     scopes = WRITE
             )}
     )
-    public ResponseEntity<UserResponsePayload> register(@RequestBody UserRegisterRequestPayload user) {
+    public ResponseEntity<UserResponsePayload> register(@RequestBody @Validated UserRegisterRequestPayload user) {
         return ResponseEntity.ok(UserResponsePayload.from(userService.register(user)));
     }
 
