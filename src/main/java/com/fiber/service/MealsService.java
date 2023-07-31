@@ -58,7 +58,7 @@ public class MealsService {
 
     private List<FoodPerMealEntity> saveFoodPerMeal(MealEntity meal, List<FoodMealRequestPayload> foods) {
         List<FoodEntity> foodEntities = foodService.getById(foods.stream().map(FoodMealRequestPayload::id).toList());
-        List<FoodPerMealEntity> list = foods.stream().map(f -> {
+        return foods.stream().map(f -> {
             FoodEntity foodEntity = foodEntities.stream()
                     .filter(food -> food.getId().equals(f.id()))
                     .findFirst()
@@ -66,8 +66,5 @@ public class MealsService {
 
             return new FoodPerMealEntity(new FoodPerMealPK(meal, foodEntity), f.quantity());
         }).toList();
-
-//        return foodPerMealRepository.saveAll(list);
-        return list;
     }
 }
