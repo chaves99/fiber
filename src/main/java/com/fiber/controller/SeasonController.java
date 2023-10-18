@@ -1,5 +1,6 @@
 package com.fiber.controller;
 
+import com.fiber.entity.DietSeasonEntity;
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.payload.http.season.SeasonUpdateDateRequestPayload;
@@ -13,9 +14,16 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.fiber.util.OpenApiConstants.READ;
 import static com.fiber.util.OpenApiConstants.SECURITY_SCHEME_NAME;
@@ -28,7 +36,7 @@ public class SeasonController {
 
     private final SeasonService seasonService;
 
-    @GetMapping("/{idUser}")
+    @GetMapping("/user/{idUser}")
     @Operation(
             description = "Return all diet season by user id.",
             responses = {
@@ -121,6 +129,14 @@ public class SeasonController {
             @RequestBody SeasonUpdateDateRequestPayload payload
     ) {
         return ResponseEntity.ok(seasonService.updateFinalDate(seasonId, payload.finalDate()).toResponsePayload());
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<SeasonResponsePayload> getById(@PathVariable Long id) {
+        Optional<DietSeasonEntity> dietSeason = seasonService.getDietSeason(id);
+        return dietSeason
+                .map(ds -> ResponseEntity.ok(ds.toResponsePayload()))
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }

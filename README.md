@@ -8,6 +8,10 @@ Fiber is an app for manage and store your diet.
 * id
 * name
 * email
+* weight
+* height
+* weightUnit
+* heightUnit
 * list of DietSeason ids
 
 ###### DietSeason:
