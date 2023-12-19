@@ -2,7 +2,7 @@
 
 Fiber is an app for manage and store your diet.
 
-### Class Structure:
+### Data Structure:
 
 ###### User:
 * id

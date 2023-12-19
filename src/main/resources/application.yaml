@@ -8,7 +8,7 @@ spring:
     name: fiber
   datasource:
     url: jdbc:mysql://172.17.0.2:3306/fiber
-    username: guest
+    username: root
     password: guest
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
@@ -29,4 +29,4 @@ logging:
 
 jwt:
   key: 9faa372517ac1d389758d3750fc07acf00f542277f26fec1ce4593e93f64e338
-  expiretime: 60 #minutes
+  expiretime: 120 #minutes
