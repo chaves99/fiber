@@ -5,6 +5,7 @@ import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
+import com.fiber.util.ListsUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class SeasonService {
 
     public List<SeasonResponsePayload> getByUserId(Long id) {
         var seasonEntity = seasonRepository.findByUserId(id);
-        if (seasonEntity == null || seasonEntity.size() == 0) {
+        if (ListsUtil.containSomething(seasonEntity)) {
             throw new ResourceNotFoundException("Not found seasons for userid:[" + id + "]");
         }
         log.debug("getByUserId:{}", seasonEntity);
@@ -76,4 +77,12 @@ public class SeasonService {
     public Optional<DietSeasonEntity> getDietSeason(Long id) {
         return seasonRepository.findById(id);
     }
+
+    public void createDefault(Long userId) {
+        SeasonCreateRequestPayload payload = new SeasonCreateRequestPayload("Default",
+                "Default", 0D, 0D, 0D, 0D, LocalDate.now(), null, userId);
+        create(payload);
+    }
+
+
 }

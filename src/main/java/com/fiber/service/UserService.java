@@ -17,6 +17,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final SeasonService seasonService;
+
     public List<UserEntity> getAll() {
         List<UserEntity> users = this.userRepository.findAll();
         log.info("getAll - users size:{}", users.size());
@@ -24,7 +26,9 @@ public class UserService {
     }
 
     public UserEntity register(UserRegisterRequestPayload user) {
-        return this.userRepository.save(user.toEntity());
+        UserEntity userEntity = this.userRepository.save(user.toEntity());
+        seasonService.createDefault(userEntity.getId());
+        return userEntity;
     }
 
     public UserEntity get(Long id) {
