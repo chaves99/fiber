@@ -4,6 +4,8 @@ import com.fiber.entity.DietSeasonEntity;
 import com.fiber.entity.UserEntity;
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.repository.DietSeasonRepository;
+import com.fiber.repository.UserRepository;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -35,7 +37,7 @@ public class SeasonServiceTest {
     DietSeasonRepository seasonRepository;
 
     @Mock
-    UserService userService;
+    UserRepository userRepository;
 
 
     @Test
@@ -44,7 +46,7 @@ public class SeasonServiceTest {
                 "Description Season", 10d, 10d, 10d, 0d, LocalDate.now(), null, 1L);
         UserEntity user = UserEntity.builder().id(1L).name("User Test").build();
 
-        when(userService.get(anyLong())).thenReturn(user);
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         service.create(payload);
 
@@ -58,7 +60,7 @@ public class SeasonServiceTest {
         UserEntity user = UserEntity.builder().id(1L).name("User Test").build();
         ArgumentCaptor<DietSeasonEntity> captor = ArgumentCaptor.forClass(DietSeasonEntity.class);
 
-        when(userService.get(anyLong())).thenReturn(user);
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         doReturn(mock(DietSeasonEntity.class)).when(seasonRepository).save(captor.capture());
 
         service.create(payload);

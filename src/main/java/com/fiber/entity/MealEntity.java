@@ -19,7 +19,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Table(name = "meal")
@@ -51,12 +53,11 @@ public class MealEntity {
     @JsonBackReference
     private DietSeasonEntity season;
 
-    // TODO it needs to handle replicated food
     public static MealEntity toEntity(DietSeasonEntity season, MealRequestPayload payload) {
         MealEntity mealEntity = new MealEntity();
         mealEntity.setSeason(season);
         mealEntity.setDayTime(LocalDateTime.now());
-        mealEntity.setDescription(payload.description());
+        mealEntity.setDescription(payload.description() != null ? payload.description() : ("Meal " + payload.order())); // TODO think about the default meal name
         mealEntity.setOrder(payload.order());
         return mealEntity;
     }

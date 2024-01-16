@@ -56,20 +56,9 @@ public class MealsServiceTest {
                 .thenReturn(foods.stream().map(f -> FoodEntity.builder().id(f.id()).build()).toList());
         doReturn(mock(MealEntity.class)).when(mealRepository).save(captor.capture());
 
-        service.create(payload);
+        service.create(payload, 0L);
 
         assertThat(captor.getValue()).isNotNull();
-    }
-
-    @Test
-    void create_shouldNotAcceptNullSeasonId() {
-        List<FoodMealRequestPayload> foods = List.of(
-                new FoodMealRequestPayload(1L, 80D),
-                new FoodMealRequestPayload(2L, 120D)
-        );
-        MealRequestPayload payload = new MealRequestPayload(null, "Description meal", 0, foods);
-
-        assertThatThrownBy(() -> service.create(payload)).isInstanceOf(ResourceNotFoundException.class);
     }
 
 }

@@ -1,10 +1,12 @@
 package com.fiber.service;
 
 import com.fiber.entity.DietSeasonEntity;
+import com.fiber.entity.UserEntity;
 import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.payload.http.season.SeasonResponsePayload;
 import com.fiber.repository.DietSeasonRepository;
+import com.fiber.repository.UserRepository;
 import com.fiber.util.ListsUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,7 @@ public class SeasonService {
 
     private final DietSeasonRepository seasonRepository;
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     public List<SeasonResponsePayload> getByUserId(Long id) {
         var seasonEntity = seasonRepository.findByUserId(id);
@@ -37,7 +39,7 @@ public class SeasonService {
     }
 
     public SeasonResponsePayload getActiveByUser(Long idUser) {
-        var activeByUserId = seasonRepository.findActiveByUserId(idUser);
+        var activeByUserId = getActiveByUserId(idUser);
 
         return activeByUserId
                 .map(SeasonResponsePayload::fromEntity)
@@ -45,9 +47,13 @@ public class SeasonService {
 
     }
 
+    public Optional<DietSeasonEntity> getActiveByUserId(Long idUser) {
+        return seasonRepository.findActiveByUserId(idUser);
+    }
+
     public DietSeasonEntity create(SeasonCreateRequestPayload payload) {
         log.info("create - payload:{}", payload);
-        DietSeasonEntity seasonEntity = payload.toEntity(userService.get(payload.userId()), true);
+        DietSeasonEntity seasonEntity = payload.toEntity(getUser(payload.userId()), true);
         disableLastSeasonByUser(payload.userId());
         if (seasonEntity.getInitialDate() == null) {
             seasonEntity.setInitialDate(LocalDate.now());
@@ -56,7 +62,7 @@ public class SeasonService {
     }
 
     private void disableLastSeasonByUser(Long userId) {
-        var activeByUserId = seasonRepository.findActiveByUserId(userId);
+        var activeByUserId = getActiveByUserId(userId);
         activeByUserId.ifPresent(season -> {
             log.info("disabling last season by user:[{}]", userId);
             season.setActive(Boolean.FALSE);
@@ -78,10 +84,16 @@ public class SeasonService {
         return seasonRepository.findById(id);
     }
 
-    public void createDefault(Long userId) {
+    public DietSeasonEntity createDefault(Long userId) {
         SeasonCreateRequestPayload payload = new SeasonCreateRequestPayload("Default",
                 "Default", 0D, 0D, 0D, 0D, LocalDate.now(), null, userId);
-        create(payload);
+        return create(payload);
+    }
+
+    private UserEntity getUser(Long id) {
+        return this.userRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 

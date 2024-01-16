@@ -1,7 +1,10 @@
 package com.fiber.controller;
 
+import com.fiber.entity.UserEntity;
+import com.fiber.error.excption.GenericException;
 import com.fiber.payload.http.meal.MealRequestPayload;
 import com.fiber.payload.http.meal.MealResponsePayload;
+import com.fiber.service.AuthenticatedUserRetrieverService;
 import com.fiber.service.MealsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -9,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +28,8 @@ public class MealsController {
 
     private final MealsService mealsService;
 
+    private final AuthenticatedUserRetrieverService authenticatedUserRetrieverService;
+
     @PostMapping
     @Operation(
             description = "Create a new meal",
@@ -32,8 +38,11 @@ public class MealsController {
                     scopes = READ
             )}
     )
-    public ResponseEntity<MealResponsePayload> createMeal(@RequestBody @Valid MealRequestPayload payload) {
-        return ResponseEntity.ok(mealsService.create(payload));
+    public ResponseEntity<MealResponsePayload> createMeal(@RequestBody @Valid MealRequestPayload payload, Authentication authentication) {
+        UserEntity user = authenticatedUserRetrieverService
+                .retrieve(authentication)
+                .orElseThrow(() -> new GenericException("Error retrieving authenticated user"));
+        return ResponseEntity.ok(mealsService.create(payload, user.getId()));
     }
 
 //    @GetMapping("/user/{userId}")

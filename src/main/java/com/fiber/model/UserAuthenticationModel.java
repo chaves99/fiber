@@ -1,13 +1,24 @@
 package com.fiber.model;
 
-import com.fiber.payload.http.login.LoginRequestPayload;
+import com.fiber.entity.UserEntity;
+import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public record UserAuthenticationModel(LoginRequestPayload payload) implements Authentication {
+@Data
+public class UserAuthenticationModel implements Authentication {
+
+    private UserEntity userEntity;
+
+    public UserAuthenticationModel(UserDetails userDetails) {
+        if (userDetails instanceof UserEntity entity) {
+            this.userEntity = entity;
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -16,17 +27,26 @@ public record UserAuthenticationModel(LoginRequestPayload payload) implements Au
 
     @Override
     public Object getCredentials() {
-        return payload.password();
+        if (userEntity != null) {
+            return userEntity.getPassword();
+        }
+        return null;
     }
 
     @Override
     public Object getDetails() {
+        if (userEntity != null) {
+            return userEntity;
+        }
         return null;
     }
 
     @Override
     public Object getPrincipal() {
-        return payload.username();
+        if (userEntity != null) {
+            return userEntity;
+        }
+        return null;
     }
 
     @Override
@@ -41,6 +61,9 @@ public record UserAuthenticationModel(LoginRequestPayload payload) implements Au
 
     @Override
     public String getName() {
-        return payload().username();
+        if (userEntity != null) {
+            return userEntity.getUsername();
+        }
+        return null;
     }
 }
