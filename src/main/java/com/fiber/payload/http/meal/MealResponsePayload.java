@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public record MealResponsePayload(
         Long id,
         LocalDateTime dayTime,
+        String description,
         int order,
         List<FoodMealResponsePayload> foods
 
@@ -21,6 +22,6 @@ public record MealResponsePayload(
     }
 
     public static MealResponsePayload fromEntity(MealEntity meal) {
-        return new MealResponsePayload(meal.getId(), meal.getDayTime(), meal.getOrder(), FoodMealResponsePayload.from(meal.getFoodPerMeal()));
+        return new MealResponsePayload(meal.getId(), meal.getDayTime(), meal.getDescription(), meal.getOrder(), FoodMealResponsePayload.from(meal.getFoodPerMeal()));
     }
 }
