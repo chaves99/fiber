@@ -57,7 +57,7 @@ public class MealEntity {
         MealEntity mealEntity = new MealEntity();
         mealEntity.setSeason(season);
         mealEntity.setDayTime(LocalDateTime.now());
-        mealEntity.setDescription(payload.description() != null ? payload.description() : ("Meal " + payload.order())); // TODO think about the default meal name
+        mealEntity.setDescription(payload.description());
         mealEntity.setOrder(payload.order());
         return mealEntity;
     }

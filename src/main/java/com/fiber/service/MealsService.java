@@ -5,15 +5,12 @@ import com.fiber.error.excption.ResourceNotFoundException;
 import com.fiber.payload.http.meal.FoodMealRequestPayload;
 import com.fiber.payload.http.meal.MealRequestPayload;
 import com.fiber.payload.http.meal.MealResponsePayload;
-import com.fiber.payload.http.season.SeasonCreateRequestPayload;
 import com.fiber.repository.FoodPerMealRepository;
 import com.fiber.repository.MealRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,20 +36,20 @@ public class MealsService {
         if (mealEntity.getOrder() == null) {
             mealEntity.setOrder(mealRepository.countByDay(mealEntity.getDayTime().toLocalDate()));
         }
+        checkDescription(mealEntity);
         List<FoodPerMealEntity> foodPerMealEntities = saveFoodPerMeal(mealEntity, payload.foods());
         mealEntity.setFoodPerMeal(foodPerMealEntities);
         MealEntity saved = mealRepository.save(mealEntity);
         return MealResponsePayload.fromEntity(saved);
     }
 
-//    private DietSeasonEntity getOrCreateSeason(MealRequestPayload payload, Long userId) {
-//        Optional<DietSeasonEntity> season = getSeason(payload.seasonId());
-//        if (season.isPresent()) {
-//            return season.get();
-//        }
-//        season = seasonService.getActiveByUserId(userId);
-//        return season.orElseGet(() -> seasonService.createDefault(userId));
-//    }
+    private void checkDescription(MealEntity mealEntity) {
+        if (mealEntity != null
+                && mealEntity.getDescription() == null
+                && mealEntity.getOrder() != null) {
+            mealEntity.setDescription("Meal - " + mealEntity.getOrder());
+        }
+    }
 
     public List<MealResponsePayload> get(Long idSeason) {
         log.info("get - season id:{}", idSeason);
