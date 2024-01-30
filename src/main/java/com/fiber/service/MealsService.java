@@ -55,6 +55,8 @@ public class MealsService {
         log.info("get - season id:{}", idSeason);
         DietSeasonEntity season = getSeason(idSeason).orElseThrow(() -> new ResourceNotFoundException("Not found season with id:" + idSeason));
         List<MealEntity> meals = mealRepository.findBySeason(season);
+        meals.get(0).getFoodPerMeal().get(0).getKey().getFood();
+//        List<FoodEntity> foods = getFoodsInMeal(meals);
         log.info("get - meals size:{}", meals.size());
         return MealResponsePayload.fromEntity(meals);
     }
