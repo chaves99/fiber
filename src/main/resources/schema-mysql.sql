@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS fiber_user (
     id bigint NOT NULL AUTO_INCREMENT,
     name varchar(255) DEFAULT NULL,
     email varchar(255) DEFAULT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS diet_season (
     protein_goal double DEFAULT NULL,
     user_id bigint NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(user_id) REFERENCES user(id)
+    FOREIGN KEY(user_id) REFERENCES fiber_user(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS meal (

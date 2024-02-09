@@ -6,14 +6,9 @@ server:
 spring:
   application:
     name: fiber
-  datasource:
-    url: jdbc:mysql://172.17.0.2:3306/fiber
-    username: root
-    password: guest
-    driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
-      platform: mysql
+      platform: ${base_platform:postgres}
       mode: ALWAYS
   jpa:
     show-sql: true
@@ -21,11 +16,18 @@ spring:
       ddl-auto: none
     generate-ddl: false
 
-logging:
-  level:
-    web: info
-    sql: info
-    root: info
+mysql:
+  datasource:
+    url: jdbc:mysql://172.17.0.2:3306/fiber
+    username: root
+    password: guest
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+postgres:
+  datasource:
+    url: ${base_url:localhost}
+    username: ${username:guest}
+    password: ${password:guest}
 
 jwt:
   key: 9faa372517ac1d389758d3750fc07acf00f542277f26fec1ce4593e93f64e338

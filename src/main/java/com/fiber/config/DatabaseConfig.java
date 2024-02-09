@@ -1,23 +1,28 @@
 package com.fiber.config;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-@Slf4j
+import javax.sql.DataSource;
+
 @Configuration
 public class DatabaseConfig {
 
-    @Value("${spring.datasource.url}")
-    private String url;
+    @Bean
+    @ConditionalOnProperty(value = "spring.sql.init.platform", havingValue = "mysql")
+    @ConfigurationProperties("mysql.datasource")
+    public DataSource mysqlDataSource() {
+        return new DriverManagerDataSource();
+    }
 
     @Bean
-    public CommandLineRunner test(ApplicationContext context) {
-        return args -> {
-            log.info("DatabaseConfig - url:{}", url);
-        };
+    @ConditionalOnProperty(value = "spring.sql.init.platform", havingValue = "postgres")
+    @ConfigurationProperties("postgres.datasource")
+    public DataSource postgresDataSource() {
+        return new DriverManagerDataSource();
     }
+
 }

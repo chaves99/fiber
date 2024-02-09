@@ -1,5 +1,10 @@
 FROM eclipse-temurin:17.0.6_10-jdk-focal
 
+ENV base_url=$base_url \
+    username=$username \
+    password=$password \
+    base_platform=$base_platform
+
 COPY .mvn .mvn
 COPY ./mvnw ./mvnw
 COPY ./src ./src
