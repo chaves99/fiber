@@ -31,6 +31,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: $DOCKER_IMAGE_TAG
+          tags: ${{ env.DOCKER_IMAGE_TAG }}
           labels: ${{ secrets.DOCKER_USER }}/fiber-app
 
