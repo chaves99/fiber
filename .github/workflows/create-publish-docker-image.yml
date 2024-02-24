@@ -35,6 +35,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.date.outputs.date  }}
-          labels: ${{ secrets.DOCKER_USER }}/fiber-app
+          tags:  chaves99/fiber-app:${{ steps.date.outputs.date  }}
+#          labels: ${{ secrets.DOCKER_USER }}/fiber-app
 
