@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "master" ]
 
-env:
-  DOCKER_IMAGE_TAG: date +"%Y.%m.%d.%H.%m"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,10 +15,7 @@ jobs:
 
       - name: get date/tag
         id: date
-        run: echo "::set-output name=date::$(date +'%Y.%m.%d.%H.%m')"
-      
-#      - name: build docker image
-#        run: docker build . --file Dockerfile --tag {{secrets.DOCKER_USER}}/fiber-app:$DOCKER_IMAGE_TAG
+        run: echo "::set-output name=date::$(date +'%Y.%m.%d.%H')"
 
       - name: log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
@@ -35,6 +29,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags:  chaves99/fiber-app:${{ steps.date.outputs.date  }}
-#          labels: ${{ secrets.DOCKER_USER }}/fiber-app
-
+          tags:  chaves99/fiber-app:${{ steps.date.outputs.date }}
