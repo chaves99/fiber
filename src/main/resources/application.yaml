@@ -18,10 +18,10 @@ spring:
 
 mysql:
   datasource:
-    url: jdbc:mysql://172.17.0.2:3306/fiber
-    username: root
-    password: guest
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${base_url:jdbc:mysql://172.17.0.2:3306/fiber}
+    username: ${username:root}
+    password: ${password:guest}
+    driverClassName: com.mysql.cj.jdbc.Driver
 
 postgres:
   datasource:
