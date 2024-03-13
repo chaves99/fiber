@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface MealRepository extends JpaRepository<MealEntity, Long> {
 
-    List<MealEntity> findBySeason(DietSeasonEntity season);
+    List<MealEntity> findBySeasonOrderByDayTimeDesc(DietSeasonEntity season);
 
     @Query("select count(meal) from MealEntity meal where date(meal.dayTime) = ?1")
     int countByDay(LocalDate day);
