@@ -30,7 +30,7 @@ public class MealsController {
 
     private final AuthenticatedUserRetrieverService authenticatedUserRetrieverService;
 
-    @PostMapping
+    @PostMapping("create")
     @Operation(
             description = "Create a new meal",
             security = {@SecurityRequirement(
@@ -43,6 +43,20 @@ public class MealsController {
                 .retrieve(authentication)
                 .orElseThrow(() -> new GenericException("Error retrieving authenticated user"));
         return ResponseEntity.ok(mealsService.create(payload, user.getId()));
+    }
+
+    @GetMapping("{idMeal}")
+    @Operation(
+            description = "Get a meal by user and meal id",
+            security = {
+                    @SecurityRequirement(name = SECURITY_SCHEME_NAME, scopes = READ)
+            }
+    )
+    public ResponseEntity<MealResponsePayload> getMeal(@PathVariable Long idMeal, Authentication authentication) {
+        UserEntity user = authenticatedUserRetrieverService
+                .retrieve(authentication)
+                .orElseThrow(() -> new GenericException("Error retrieving authenticated user"));
+        return ResponseEntity.ok(mealsService.fetch(idMeal));
     }
 
 //    @GetMapping("/user/{userId}")

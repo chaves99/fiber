@@ -66,6 +66,11 @@ public class MealsService {
         return Optional.empty();
     }
 
+    public MealResponsePayload fetch(Long idMeal) {
+        MealEntity mealEntity = mealRepository.findById(idMeal).orElseThrow(() -> new ResourceNotFoundException("Meal not found id:" + idMeal));
+        return MealResponsePayload.fromEntity(mealEntity);
+    }
+
     private List<FoodPerMealEntity> saveFoodPerMeal(MealEntity meal, List<FoodMealRequestPayload> foods) {
         List<FoodEntity> foodEntities = foodService.getById(foods.stream().map(FoodMealRequestPayload::id).toList());
         return foods.stream().map(f -> {

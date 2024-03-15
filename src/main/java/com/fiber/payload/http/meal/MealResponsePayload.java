@@ -12,7 +12,6 @@ public record MealResponsePayload(
         String description,
         int order,
         List<FoodMealResponsePayload> foods
-
 ) {
     public static List<MealResponsePayload> fromEntity(List<MealEntity> meals) {
         return meals
