@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.6_10-jdk-focal
+FROM eclipse-temurin:21-alpine
 
 ENV base_url=$base_url \
     username=$username \
