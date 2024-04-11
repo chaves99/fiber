@@ -3,6 +3,7 @@ package com.fiber.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fiber.payload.http.food.RegisterFoodRequestPayload;
+import com.fiber.util.FoodMacroTotalizer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class FoodEntity {
+public class FoodEntity implements FoodMacroTotalizer.FoodTotalizer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

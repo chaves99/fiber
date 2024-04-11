@@ -1,6 +1,5 @@
 package com.fiber.util;
 
-import com.fiber.entity.FoodEntity;
 import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
@@ -8,7 +7,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public final class FoodMacroTotalizer {
 
-    private final FoodEntity food;
+    private final FoodTotalizer food;
 
     private final Double quantity;
 
@@ -37,6 +36,20 @@ public final class FoodMacroTotalizer {
 
     public Double getFiber() {
         return calc(food.getBaseQuantity(), food.getFiber(), quantity);
+    }
+
+    public interface FoodTotalizer {
+        Double getBaseQuantity();
+
+        Double getFat();
+
+        Double getCalories();
+
+        Double getFiber();
+
+        Double getCarbohydrate();
+
+        Double getProtein();
     }
 
 }

@@ -21,18 +21,10 @@ import org.springframework.context.annotation.Configuration;
                         email = "viniciusbaleia1999@gmail.com")
         ),
         tags = {
-                @Tag(
-                        name = "Food"
-                ),
-                @Tag(
-                        name = "Season"
-                ),
-                @Tag(
-                        name = "User"
-                ),
-                @Tag(
-                        name = "Meal"
-                )
+                @Tag(name = "Food"),
+                @Tag(name = "Season"),
+                @Tag(name = "User"),
+                @Tag(name = "Meal")
         }
 )
 @SecurityScheme(
