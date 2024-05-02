@@ -3,6 +3,7 @@ package com.fiber.error;
 import com.fiber.error.excption.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,6 +39,12 @@ public class GenericErrorHandlerController {
             message = err.getMessage();
         }
         return ErrorResponse.builder(err, HttpStatus.BAD_REQUEST, message).build();
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthenticationException.class)
+    public ErrorResponse authenticationError(AuthenticationException err) {
+        return ErrorResponse.builder(err, HttpStatus.UNAUTHORIZED, err.getMessage()).build();
     }
 
 }

@@ -61,7 +61,7 @@ public class MealReportService {
             }
         }
 
-        return new MealReportResponsePayload(mealReport.get(0).getSeasonId(), mealDays);
+        return mealReport.isEmpty() ? null : new MealReportResponsePayload(mealReport.get(0).getSeasonId(), mealDays);
     }
 
     private MealDetailReportResponsePayload buildNewMeal(MealReportProjection projection) {
@@ -75,10 +75,9 @@ public class MealReportService {
 
     private FoodReportResponsePayload buildFood(MealReportProjection projection) {
         FoodMacroTotalizer totalizer = new FoodMacroTotalizer(projection, projection.getQuantity());
-        FoodReportResponsePayload food = new FoodReportResponsePayload(
+        return new FoodReportResponsePayload(
                 projection.getFoodName(), projection.getQuantity(), totalizer.getKcal(),
                 totalizer.getCarbs(), totalizer.getFat(), totalizer.getProtein());
-        return food;
     }
 
 }

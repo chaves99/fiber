@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
@@ -37,12 +38,16 @@ public class SecurityConfig {
                     r.requestMatchers(HttpMethod.OPTIONS).permitAll();
                     r.anyRequest().authenticated();
                 })
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .httpBasic().and()
-                .formLogin().disable()
+                .oauth2ResourceServer(oauth -> {
+                    oauth.jwt(Customizer.withDefaults());
+                })
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(formLogin -> formLogin.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf().disable()
-                .headers().frameOptions().disable().and()
+                .csrf(csrf -> csrf.disable())
+                .headers( headers -> {
+                    headers.frameOptions(c -> c.disable());
+                })
                 .build();
     }
 

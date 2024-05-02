@@ -26,7 +26,7 @@ public class UsernamePasswordCustomAuthenticationProviderImpl implements Authent
         if (matches) {
             return new UserAuthenticationModel(userDetails);
         }
-        return null;
+        throw new AuthenticationException("Error on login"){};
     }
 
     @Override
